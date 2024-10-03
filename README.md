@@ -17,7 +17,7 @@ Esta es una aplicación creada con Node.js que permite la gestión de usuarios y
 
 #### **Login (Autenticación)**
 
-**POST** `http://localhost:3000/auth`
+**POST** `/auth`
 
 Este endpoint permite a los usuarios autenticarse en la aplicación y recibir un token de acceso.
 
@@ -42,7 +42,7 @@ Este endpoint permite a los usuarios autenticarse en la aplicación y recibir un
 
 #### **Crear un usuario**
 
-**POST** `http://localhost:3000/usuario`
+**POST** `/usuario`
 
 Este endpoint permite a los administradores crear nuevos usuarios.
 
@@ -59,7 +59,7 @@ Este endpoint permite a los administradores crear nuevos usuarios.
 
 #### **Actualizar un usuario**
 
-**PUT** `http://localhost:3000/usuario/:id`
+**PUT** `/usuario/:id`
 
 Permite a los administradores actualizar los datos de un usuario existente.
 
@@ -79,13 +79,13 @@ Permite a los administradores actualizar los datos de un usuario existente.
 
 #### **Usuarios comunes: Ver pagos propios**
 
-**GET** `http://localhost:3000/usuario/pagos`
+**GET** `/usuario/pagos`
 
 Obtiene un listado de los pagos del usuario autenticado.
 
 #### **Descargar recibo**
 
-**GET** `http://localhost:3000/usario/:id/recibo`
+**GET** `/usuario/:id/recibo`
 
 Permite a un usuario descargar su propio recibo en formato PDF.
 
@@ -93,19 +93,19 @@ Permite a un usuario descargar su propio recibo en formato PDF.
 
 #### **Listar todos los pagos**
 
-**GET** `http://localhost:3000/pago`
+**GET** `/pago`
 
 Obtiene el listado de todos los pagos registrados.
 
 #### **Obtener datos de un pago específico**
 
-**GET** `http://localhost:3000/pago/:id`
+**GET** `/pago/:id`
 
 Obtiene los detalles de un pago en particular.
 
 #### **Registrar un nuevo pago**
 
-**POST** `http://localhost:3000/pago`
+**POST** `/pago`
 
 Permite registrar un nuevo pago.
 
@@ -128,7 +128,7 @@ Permite registrar un nuevo pago.
 
 #### **Modificar un pago existente**
 
-**PUT** `http://localhost:3000/pago/:id`
+**PUT** `/pago/:id`
 
 Permite modificar un pago existente.
 
@@ -148,7 +148,7 @@ Permite modificar un pago existente.
 
 #### **Desactivar un pago**
 
-**DELETE** `http://localhost:3000/pago/:id`
+**DELETE** `/pago/:id`
 
 Este endpoint permite desactivar un pago, es decir, no se elimina, pero pasa a estar inactivo.
 
@@ -161,22 +161,18 @@ Este endpoint permite desactivar un pago, es decir, no se elimina, pero pasa a e
 
 
 # **ADICIONALES**
-### **Paginacion**
+### **Paginacion y Ordenamiento**
 
-#### **Crear un usuario**
+#### **Listar Pagos**
 
-**GET** `http://localhost:3000/pago`
+**GET** `/pago`
 
 Este endpoint tiene como opcional los campos detallados para hacer una correcta paginacion y ordenamiento por ejemplo "/pago?sortBy=descripcion&order=desc"
 
-**Cuerpo del request:**
+**Cuerpo del queryparam:**
+    page,limit,order = asc/desc,sortBy = CAMPO
 
-```json
-{
-    page = 1
-    limit = 10
-    order = asc/desc
-    sortBy = CAMPO
-}
+```Ejemplo
+    /pago?page=1&limit=10&order=desc&sortBy=fechaCarga
 ```
 
