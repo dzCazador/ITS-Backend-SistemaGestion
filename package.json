@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "jest"
   },
   "keywords": [],
@@ -22,6 +22,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.11.3",
     "sequelize": "^6.37.3",
+    "socket.io": "^4.8.0",
     "sqlite3": "^5.1.7",
     "uuid": "^10.0.0"
   },

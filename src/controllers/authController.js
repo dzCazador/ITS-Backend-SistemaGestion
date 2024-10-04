@@ -7,6 +7,8 @@ const objLogin = require('../models/LoginModel');
 
 const jwt = require('jsonwebtoken');
 
+
+
 // Controlador para obtener todos los Pagos
 exports.authorization = async (req, res) => {
   const { nombre, password } = req.body;
@@ -48,7 +50,7 @@ exports.authorization = async (req, res) => {
     });
 */
     
-    res.status(200).json({ accessToken, message: 'Acceso Correcto' });
+    res.status(200).json({ accessToken:accessToken, message: 'Acceso Correcto' });
     
   } catch (error) {
     console.error(error); // Loguear el error en el servidor
@@ -82,9 +84,10 @@ exports.isAdmin = async (req, res, next) => {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
         
-        if (user.rolId!== 2) { // Rol 2 es Admin
+        if (user.rolId< 2) { // Rol 1 Usurio Comun No tiene Permido
             return res.status(403).json({ error: 'No tienes permisos para acceder a esta ruta' });
         }
+        //Rol 2  es Admin y 3 es Super Admin tienen Permiso
         next();
 
     } catch (error) {
@@ -92,3 +95,39 @@ exports.isAdmin = async (req, res, next) => {
     }
 };
 
+
+exports.isSuperAdmin = async (req, res, next) => {
+
+    const token = req.headers['authorization'];
+    
+    if (!token) {
+        return res.status(401).json({ error: 'Token no proporcionado' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+        //buscar el usuario decoded
+        
+        const user = await objUsuario.findOne({
+            where: {
+                nombre: {
+                    [Op.like]: `%${decoded.usuario}%` // Búsqueda parcial
+                }
+            }
+        });
+
+        
+        if (!user) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        
+        if (user.rolId< 3) { //  Rol menor a 3 (comun y admin) no tienen permiso
+            return res.status(403).json({ error: 'No tienes permisos para acceder a esta ruta' });
+        }
+         //  Solo Rol 3 es Super Admin tiene permiso
+        next();
+
+    } catch (error) {
+        return res.status(401).json({ error: 'Token inválido' });
+    }
+};

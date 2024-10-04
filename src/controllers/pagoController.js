@@ -4,6 +4,8 @@ const path = require("path");
 const { body,validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
+const { emitirActualizacionDeRegistros } = require('../app');
+
 
 // Controlador para obtener todos los Pagos
 exports.getAllPagos = async (req, res) => {
@@ -147,6 +149,8 @@ exports.createPago = [
                 usuarioId,
                 monto
             });
+            // Emite mensajes a los administradores
+            emitirActualizacionDeRegistros (nuevoPago)
             // Responder con el Pago creado
             res.status(201).json(nuevoPago);
         } catch (error) {
@@ -184,6 +188,9 @@ exports.updatePago = [
             Pago.monto = monto || Pago.monto;
 
             await Pago.save();
+            // Emite mensajes a los administradores
+            emitirActualizacionDeRegistros (Pago)
+
             res.status(200).json(Pago);
         } catch (error) {
             console.error(error);
