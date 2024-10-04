@@ -19,6 +19,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Middleware para manejar datos URL-encoded
 app.use(express.static('public'));
 
 app.use(fileUpload({

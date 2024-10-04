@@ -12,7 +12,8 @@ const jwt = require('jsonwebtoken');
 // Controlador para obtener todos los Pagos
 exports.authorization = async (req, res) => {
   const { nombre, password } = req.body;
-
+    console.log(req.body);
+ 
   try {
     // Buscar el usuario en la base de datos
 
